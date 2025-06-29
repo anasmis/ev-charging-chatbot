@@ -1,0 +1,14 @@
+[build]
+builder = "dockerfile"
+
+[deploy]
+healthcheckPath = "/webhooks/rest/health"
+healthcheckTimeout = 300
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 3
+
+[env]
+ENVIRONMENT = "production"
+DEBUG = "false"
+LOG_LEVEL = "INFO"
+PYTHONPATH = "/app"
