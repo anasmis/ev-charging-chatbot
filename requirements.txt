@@ -1,20 +1,14 @@
-# Core Rasa
+# Core Rasa - pinned versions for stability
 rasa==3.6.0
 rasa-sdk==3.6.0
 
-# Database drivers
+# Database
 psycopg2-binary==2.9.7
-sqlalchemy==2.0.19
 
-# HTTP and API
+# HTTP requests
 requests==2.31.0
-aiohttp==3.8.5
 
 # Environment management
 python-dotenv==1.0.0
 
-# Production server
-gunicorn==21.2.0
-
-# Utilities
-pyyaml==6.0.1
+# Only essential packages for Railway deployment

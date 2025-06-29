@@ -1,32 +1,39 @@
-# Multi-stage build for Railway deployment
-FROM python:3.9-slim
+# Use a more recent Python image with better package support
+FROM python:3.9-slim-bullseye
 
 WORKDIR /app
 
-# Install system dependencies
+# Install system dependencies required for Rasa and other packages
 RUN apt-get update && apt-get install -y \
     build-essential \
     curl \
+    git \
+    gcc \
+    g++ \
+    libffi-dev \
+    libssl-dev \
+    python3-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements and install Python dependencies
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# Upgrade pip to latest version
+RUN pip install --upgrade pip
 
-# Copy Rasa project
+# Copy requirements and install Python dependencies in stages
+COPY requirements.txt .
+
+# Install dependencies with verbose output for debugging
+RUN pip install --no-cache-dir --verbose -r requirements.txt
+
+# Copy project files
 COPY rasa/ ./rasa/
 COPY web-interface/ ./web-interface/
+COPY database/ ./database/
 
 # Set environment variables
 ENV PYTHONPATH=/app
 ENV RASA_MODEL_PATH=/app/rasa/models
 
-# Pre-train the Rasa model to reduce startup time
-WORKDIR /app/rasa
-RUN rasa train --fixed-model-name chatbot-model
-
 # Create startup script
-WORKDIR /app
 COPY start-railway.sh .
 RUN chmod +x start-railway.sh
 
@@ -34,7 +41,7 @@ RUN chmod +x start-railway.sh
 EXPOSE 5005 8080
 
 # Health check
-HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
-  CMD curl -f http://localhost:5005/webhooks/rest/webhook || exit 1
+HEALTHCHECK --interval=60s --timeout=30s --start-period=120s --retries=3 \
+  CMD curl -f http://localhost:5005/webhooks/rest/health || exit 1
 
 CMD ["./start-railway.sh"]
