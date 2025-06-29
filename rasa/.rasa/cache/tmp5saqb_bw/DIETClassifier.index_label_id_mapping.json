@@ -1,0 +1,16 @@
+{
+  "0": "affirm",
+  "1": "ask_compatibility",
+  "2": "ask_installation",
+  "3": "ask_services",
+  "4": "charger_inquiry",
+  "5": "compare_products",
+  "6": "deny",
+  "7": "ev_inquiry",
+  "8": "goodbye",
+  "9": "greet",
+  "10": "provide_info",
+  "11": "request_estimate",
+  "12": "select_language",
+  "13": "talk_to_human"
+}

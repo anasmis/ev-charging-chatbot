@@ -1,0 +1,154 @@
+version: "3.1"
+
+intents:
+  - greet
+  - goodbye
+  - affirm
+  - deny
+  - select_language
+  - ask_services
+  - charger_inquiry
+  - ev_inquiry
+  - request_estimate
+  - talk_to_human
+  - provide_info
+  - ask_installation
+  - ask_compatibility
+  - compare_products
+
+entities:
+  - language
+  - charger_type
+  - power_requirement
+  - installation_type
+  - ev_make
+  - ev_model
+  - customer_name
+  - customer_email
+  - customer_phone
+  - customer_company
+  - location
+
+slots:
+  selected_language:
+    type: text
+    initial_value: null
+    mappings:
+    - type: from_entity
+      entity: language
+
+  customer_name:
+    type: text
+    initial_value: null
+    mappings:
+    - type: from_entity
+      entity: customer_name
+
+  customer_email:
+    type: text
+    initial_value: null
+    mappings:
+    - type: from_entity
+      entity: customer_email
+
+  customer_phone:
+    type: text
+    initial_value: null
+    mappings:
+    - type: from_entity
+      entity: customer_phone
+
+  customer_company:
+    type: text
+    initial_value: null
+    mappings:
+    - type: from_entity
+      entity: customer_company
+
+  installation_type:
+    type: text
+    initial_value: null
+    mappings:
+    - type: from_entity
+      entity: installation_type
+
+  charger_type:
+    type: text
+    initial_value: null
+    mappings:
+    - type: from_entity
+      entity: charger_type
+
+  power_requirement:
+    type: text
+    initial_value: null
+    mappings:
+    - type: from_entity
+      entity: power_requirement
+
+  ev_make:
+    type: text
+    initial_value: null
+    mappings:
+    - type: from_entity
+      entity: ev_make
+
+  ev_model:
+    type: text
+    initial_value: null
+    mappings:
+    - type: from_entity
+      entity: ev_model
+
+responses:
+  utter_greet_language_selection:
+    - text: "Welcome to EV Charge Solutions! 🔌⚡ Please select your preferred language:\n\nBienvenue! Sélectionnez votre langue:\nمرحبا! اختر لغتك المفضلة:\nأهلا! اختار اللغة لي بغيتي:"
+      buttons:
+        - title: "🇺🇸 English"
+          payload: '/select_language{"language": "english"}'
+        - title: "🇫🇷 Français"
+          payload: '/select_language{"language": "french"}'
+        - title: "🇸🇦 العربية"
+          payload: '/select_language{"language": "arabic"}'
+        - title: "🇲🇦 الدارجة"
+          payload: '/select_language{"language": "darija"}'
+
+  utter_greet_english:
+    - text: "Welcome to EV Charge Solutions! ⚡🚗\n\nI'm your EV charging expert assistant. I can help you find the perfect electric vehicle charger or EV for your needs.\n\nWhat can I assist you with today?"
+
+  utter_greet_french:
+    - text: "Bienvenue chez EV Charge Solutions! ⚡🚗\n\nJe suis votre assistant expert en recharge EV. Je peux vous aider à trouver le chargeur parfait ou le véhicule électrique pour vos besoins.\n\nComment puis-je vous aider aujourd'hui?"
+
+  utter_greet_arabic:
+    - text: "أهلا وسهلا بكم في EV Charge Solutions! ⚡🚗\n\nأنا مساعدك المتخصص في شحن المركبات الكهربائية. يمكنني مساعدتك في العثور على الشاحن المثالي أو السيارة الكهربائية لاحتياجاتك.\n\nكيف يمكنني مساعدتك اليوم؟"
+
+  utter_greet_darija:
+    - text: "مرحبا بيك في EV Charge Solutions! ⚡🚗\n\nأنا المساعد المتخصص ديالك في الشحن ديال الطوموبيلات الكهربائية. نقدر نعاونك تلقى الشاحن المناسب ولا الطوموبيل الكهربائية لحاجتك.\n\nكيفاش نقدر نعاونك اليوم؟"
+
+  utter_services_english:
+    - text: "I can help you with:\n\n🔌 **EV Charger Solutions:**\n   • Home charging stations (Level 1 & 2)\n   • Commercial charging solutions\n   • DC fast chargers\n   • Portable chargers\n\n🚗 **Electric Vehicles:**\n   • Tesla, BMW, Mercedes, Audi\n   • Hyundai, Kia, Volkswagen\n   • Commercial EVs\n\n💰 **Services:**\n   • Cost estimates & quotes\n   • Installation planning\n   • Compatibility checking\n   • Expert consultation\n\nWhat interests you most?"
+
+  utter_services_french:
+    - text: "Je peux vous aider avec:\n\n🔌 **Solutions de Chargeur EV:**\n   • Stations de recharge domestiques\n   • Solutions de recharge commerciales\n   • Chargeurs rapides DC\n   • Chargeurs portables\n\n🚗 **Véhicules Électriques:**\n   • Tesla, BMW, Mercedes, Audi\n   • Hyundai, Kia, Volkswagen\n   • VE commerciaux\n\n💰 **Services:**\n   • Estimations et devis\n   • Planification d'installation\n   • Vérification de compatibilité\n   • Consultation d'expert\n\nQu'est-ce qui vous intéresse le plus?"
+
+  utter_services_arabic:
+    - text: "يمكنني مساعدتك في:\n\n🔌 **حلول شاحن المركبات الكهربائية:**\n   • محطات الشحن المنزلية\n   • حلول الشحن التجارية\n   • شواحن DC السريعة\n   • شواحن محمولة\n\n🚗 **المركبات الكهربائية:**\n   • تسلا، بي إم دبليو، مرسيدس، أودي\n   • هيونداي، كيا، فولكسفاغن\n   • المركبات التجارية\n\n💰 **الخدمات:**\n   • تقديرات التكلفة والعروض\n   • تخطيط التركيب\n   • فحص التوافق\n   • استشارة الخبراء\n\nما الذي يهمك أكثر؟"
+
+  utter_services_darija:
+    - text: "نقدر نعاونك في:\n\n🔌 **حلول شاحن الطوموبيلات الكهربائية:**\n   • محطات الشحن للدار\n   • حلول الشحن التجارية\n   • الشواحن السريعة\n   • شواحن قابلة للنقل\n\n🚗 **الطوموبيلات الكهربائية:**\n   • تسلا، بي إم دبليو، مرسيدس، أودي\n   • هيونداي، كيا، فولكسفاغن\n   • الطوموبيلات التجارية\n\n💰 **الخدمات:**\n   • تقدير الثمن والعروض\n   • تخطيط التركيب\n   • فحص التوافق\n   • استشارة الخبراء\n\nأشنو كايهمك كتر؟"
+
+  utter_goodbye:
+    - text: "Thank you for choosing EV Charge Solutions! Have a great day! ⚡🚗"
+    - text: "Goodbye! Feel free to contact us anytime for your EV charging needs!"
+
+actions:
+  - action_set_language
+  - action_suggest_chargers
+  - action_suggest_evs
+  - action_check_compatibility
+  - action_request_estimate
+  - action_transfer_to_human
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

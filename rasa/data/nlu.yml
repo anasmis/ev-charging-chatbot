@@ -1,0 +1,238 @@
+version: "3.1"
+
+nlu:
+- intent: greet
+  examples: |
+    - hello
+    - hi
+    - hey
+    - good morning
+    - good evening
+    - bonjour
+    - salut
+    - bonsoir
+    - مرحبا
+    - أهلا
+    - السلام عليكم
+    - صباح الخير
+    - أهلا بيك
+    - سلام
+    - كيفاش داير
+    - اهلا
+
+- intent: select_language
+  examples: |
+    - english
+    - français
+    - العربية
+    - الدارجة
+    - i want english
+    - je veux français
+    - أريد العربية
+    - بغيت الدارجة
+    - speak english
+    - parler français
+
+- intent: ask_services
+  examples: |
+    - what can you do
+    - what services do you offer
+    - help me
+    - what do you have
+    - qu'est-ce que vous pouvez faire
+    - quels services offrez-vous
+    - aidez-moi
+    - ماذا تستطيع أن تفعل
+    - ما هي الخدمات التي تقدمونها
+    - ساعدني
+    - أشنو كاتقدرو تديرو
+    - شنو عندكم
+    - عاونوني
+
+- intent: charger_inquiry
+  examples: |
+    - I need an EV charger
+    - looking for electric car charger
+    - show me [level2](charger_type) chargers
+    - I want a [home](installation_type) charger
+    - need [commercial](installation_type) charging station
+    - [22kW](power_requirement) charger
+    - [fast charging](charger_type) solution
+    - j'ai besoin d'un chargeur EV
+    - je cherche un chargeur pour voiture électrique
+    - أحتاج شاحن للسيارة الكهربائية
+    - أبحث عن شاحن كهربائي
+    - بغيت شاحن للطوموبيل الكهربائية
+    - كانبحث على شاحن
+    - wall mounted charger
+    - portable charger
+    - Tesla charger
+    - Type 2 charger
+    - CCS charger
+
+- intent: ev_inquiry
+  examples: |
+    - I'm looking for an electric car
+    - show me [Tesla](ev_make) models
+    - [BMW](ev_make) electric vehicles
+    - [Model 3](ev_model) information
+    - what EVs do you have
+    - electric vehicle recommendations
+    - je cherche une voiture électrique
+    - montrez-moi les [Tesla](ev_make)
+    - أبحث عن سيارة كهربائية
+    - أريد معلومات عن [تسلا](ev_make)
+    - بغيت طوموبيل كهربائية
+    - شنو عندكم من طوموبيلات كهربائية
+    - [Hyundai](ev_make) IONIQ
+    - [Volkswagen](ev_make) ID.4
+    - [Mercedes](ev_make) EQC
+
+- intent: ask_installation
+  examples: |
+    - how much does installation cost
+    - installation requirements
+    - do you install chargers
+    - installation process
+    - combien coûte l'installation
+    - exigences d'installation
+    - كم تكلف عملية التركيب
+    - متطلبات التركيب
+    - شحال كايكلف التركيب
+    - كيفاش كاتديرو التركيب
+    - professional installation
+    - home installation
+    - commercial installation
+
+- intent: ask_compatibility
+  examples: |
+    - is this charger compatible with my car
+    - what cars work with this charger
+    - [Tesla](ev_make) compatibility
+    - connector types
+    - ce chargeur est-il compatible avec ma voiture
+    - هل هذا الشاحن متوافق مع سيارتي
+    - واش هاد الشاحن كايخدم مع الطوموبيل ديالي
+    - Type 1 vs Type 2
+    - CCS compatibility
+    - CHAdeMO support
+
+- intent: request_estimate
+  examples: |
+    - can you give me an estimate
+    - how much would it cost
+    - what's the price
+    - I need a quote
+    - pricing information
+    - pouvez-vous me donner une estimation
+    - combien ça coûterait
+    - quel est le prix
+    - أريد تقدير للسعر
+    - كم سيكلف هذا
+    - ما هو السعر
+    - بغيت نعرف الثمن
+    - شحال غايكلف
+    - total cost
+    - installation quote
+    - full package price
+
+- intent: talk_to_human
+  examples: |
+    - I want to talk to a person
+    - connect me to sales
+    - I need human help
+    - transfer me to agent
+    - speak to specialist
+    - je veux parler à une personne
+    - connectez-moi aux ventes
+    - أريد التحدث مع شخص
+    - اربطني بفريق المبيعات
+    - بغيت نهدر مع شي واحد
+    - وصلني مع البائع
+    - sales representative
+    - technical support
+    - expert consultation
+
+- intent: provide_info
+  examples: |
+    - my name is [John Smith](customer_name)
+    - I'm [Ahmed](customer_name)
+    - my email is [john@email.com](customer_email)
+    - you can reach me at [+1234567890](customer_phone)
+    - my company is [Tesla Motors](customer_company)
+    - je m'appelle [Marie Dubois](customer_name)
+    - mon email est [marie@email.com](customer_email)
+    - اسمي [أحمد محمد](customer_name)
+    - بريدي الإلكتروني [ahmed@email.com](customer_email)
+    - سميتي [خديجة](customer_name)
+    - الإيميل ديالي [khadija@email.com](customer_email)
+    - شركتي [EV Solutions](customer_company)
+    - my phone number is [0123456789](customer_phone)
+
+- intent: compare_products
+  examples: |
+    - compare chargers
+    - what's the difference between level 1 and level 2
+    - [7kW](power_requirement) vs [22kW](power_requirement)
+    - Tesla vs other brands
+    - home vs commercial chargers
+    - comparer les chargeurs
+    - quelle est la différence
+    - قارن بين الشواحن
+    - ما الفرق بين
+    - قارنلي بين الشاحنات
+    - أشنو الفرق بين
+    - AC vs DC charging
+    - fast charging vs slow charging
+
+- intent: affirm
+  examples: |
+    - yes
+    - yeah
+    - of course
+    - sure
+    - absolutely
+    - correct
+    - oui
+    - bien sûr
+    - نعم
+    - أجل
+    - بالطبع
+    - أيوا
+    - واخا
+    - بلا مانيك
+    - exactement
+    - that's right
+
+- intent: deny
+  examples: |
+    - no
+    - no thanks
+    - not interested
+    - nope
+    - non
+    - non merci
+    - لا
+    - لا شكرا
+    - لست مهتما
+    - لا
+    - ماشي
+    - اللا
+    - pas intéressé
+    - not now
+
+- intent: goodbye
+  examples: |
+    - bye
+    - goodbye
+    - see you later
+    - thanks goodbye
+    - au revoir
+    - à bientôt
+    - مع السلامة
+    - إلى اللقاء
+    - بسلامة
+    - مع السلامة
+    - تشوف خير
+    - merci au revoir
+    - شكرا ومع السلامة

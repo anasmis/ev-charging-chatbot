@@ -1,0 +1,61 @@
+version: "3.1"
+
+stories:
+
+- story: language selection and greeting
+  steps:
+  - intent: greet
+  - action: utter_greet_language_selection
+  - intent: select_language
+  - action: action_set_language
+
+- story: charger inquiry flow
+  steps:
+  - intent: greet
+  - action: utter_greet_language_selection
+  - intent: select_language
+  - action: action_set_language
+  - intent: charger_inquiry
+  - action: action_suggest_chargers
+  - intent: request_estimate
+  - action: action_request_estimate
+
+- story: ev inquiry flow
+  steps:
+  - intent: greet
+  - action: utter_greet_language_selection
+  - intent: select_language
+  - action: action_set_language
+  - intent: ev_inquiry
+  - action: action_suggest_evs
+  - intent: ask_compatibility
+  - action: action_check_compatibility
+
+- story: direct estimate request
+  steps:
+  - intent: request_estimate
+  - action: action_request_estimate
+  - intent: affirm
+  - action: action_transfer_to_human
+
+- story: human handover
+  steps:
+  - intent: talk_to_human
+  - action: action_transfer_to_human
+
+- story: complete customer journey
+  steps:
+  - intent: greet
+  - action: utter_greet_language_selection
+  - intent: select_language
+  - action: action_set_language
+  - intent: ask_services
+  - intent: charger_inquiry
+  - action: action_suggest_chargers
+  - intent: affirm
+  - intent: request_estimate
+  - action: action_request_estimate
+  - intent: affirm
+  - action: action_transfer_to_human
+  - intent: goodbye
+  - action: utter_goodbye

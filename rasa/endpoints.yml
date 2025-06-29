@@ -1,0 +1,15 @@
+action_endpoint:
+  url: "http://localhost:5055/webhook"
+
+tracker_store:
+  type: redis
+  url: redis://localhost:6379
+  db: 0
+  password: null
+  record_data_for_surrogate_key: false
+
+event_broker:
+  type: redis
+  url: redis://localhost:6379
+  db: 1
+  password: null

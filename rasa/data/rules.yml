@@ -1,0 +1,43 @@
+version: "3.1"
+
+rules:
+
+- rule: Always greet with language selection
+  steps:
+  - intent: greet
+  - action: utter_greet_language_selection
+
+- rule: Set language when selected
+  steps:
+  - intent: select_language
+  - action: action_set_language
+
+- rule: Say goodbye anytime the user says goodbye
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+
+- rule: Suggest chargers when inquired
+  steps:
+  - intent: charger_inquiry
+  - action: action_suggest_chargers
+
+- rule: Suggest EVs when inquired
+  steps:
+  - intent: ev_inquiry
+  - action: action_suggest_evs
+
+- rule: Handle estimate requests
+  steps:
+  - intent: request_estimate
+  - action: action_request_estimate
+
+- rule: Transfer to human when requested
+  steps:
+  - intent: talk_to_human
+  - action: action_transfer_to_human
+
+- rule: Check compatibility when asked
+  steps:
+  - intent: ask_compatibility
+  - action: action_check_compatibility

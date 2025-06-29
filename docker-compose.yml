@@ -1,0 +1,115 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: ev_chatbot_postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    networks:
+      - ev_chatbot_network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis (for Rasa tracking)
+  redis:
+    image: redis:7-alpine
+    container_name: ev_chatbot_redis
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - ev_chatbot_network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  # Rasa Actions Server (will connect to your local Rasa)
+  rasa-actions:
+    build:
+      context: ./rasa
+      dockerfile: Dockerfile.actions
+    container_name: ev_chatbot_rasa_actions
+    volumes:
+      - ./rasa/actions:/app/actions
+      - ./logs:/app/logs
+    ports:
+      - "5055:5055"
+    networks:
+      - ev_chatbot_network
+    environment:
+      - N8N_WEBHOOK_BASE_URL=http://n8n:5678
+      - LOG_LEVEL=${LOG_LEVEL}
+      - POSTGRES_HOST=postgres
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+  web-interface:
+    image: nginx:alpine
+    container_name: ev_chatbot_web
+    volumes:
+      - ./web-interface:/usr/share/nginx/html
+    ports:
+      - "8080:80"
+    networks:
+      - ev_chatbot_network
+    restart: unless-stopped
+  # n8n Workflow Automation
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: ev_chatbot_n8n
+    environment:
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_HOST=postgres
+      - DB_POSTGRESDB_PORT=5432
+      - DB_POSTGRESDB_DATABASE=${N8N_DB}
+      - DB_POSTGRESDB_USER=${POSTGRES_USER}
+      - DB_POSTGRESDB_PASSWORD=${POSTGRES_PASSWORD}
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=${N8N_USER}
+      - N8N_BASIC_AUTH_PASSWORD=${N8N_PASSWORD}
+      - WEBHOOK_URL=http://localhost:5678
+      - GENERIC_TIMEZONE=UTC
+      - N8N_LOG_LEVEL=${LOG_LEVEL}
+      - N8N_ENCRYPTION_KEY=${N8N_ENCRYPTION_KEY}
+    ports:
+      - "5678:5678"
+    volumes:
+      - n8n_data:/home/node/.n8n
+      - ./logs:/home/node/logs
+    networks:
+      - ev_chatbot_network
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  redis_data:
+  n8n_data:
+
+networks:
+  ev_chatbot_network:
+    driver: bridge
